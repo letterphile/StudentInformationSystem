@@ -1,0 +1,10 @@
+{%extends 'student/form.html'%}
+{%block content%}
+<form action="{{std.id}}" method="post">
+   <p>{{form.as_p}}
+       {%csrf_token%}
+   </p>
+   <input type ="submit" value="save">
+</form>
+<a href="{%url 'student:student_delete' std.id %}"><p>Delete</p></a>
+{%endblock%}

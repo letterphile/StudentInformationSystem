@@ -1,0 +1,10 @@
+{%load static%}
+<html>
+    <ol>
+        {%for student in students%}
+        <a href="{{ student.get_absolute_url }}">
+        <li>{{student.name}}</li>
+        </a>
+        {%endfor%}
+    </ol>
+</html>

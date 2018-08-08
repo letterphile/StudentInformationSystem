@@ -1,0 +1,10 @@
+{%load static%}
+<html>
+{%block content%}
+<form action="/student/result/" method='post'>
+   <p>{{form.as_p}}</p>
+   {%csrf_token%}
+   <input type ="submit" value="Enter">
+</form>
+{%endblock%}
+</html>

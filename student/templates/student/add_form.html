@@ -1,0 +1,13 @@
+{%extends 'student/form.html'%}
+{%block content%}
+{%if add_form == 'Empty'%}
+<h1>{{stud.name }} is successfully added...</h1>
+<a href=".">Add Another</p></a>
+{%else%}
+<form action="." method="post">
+    <p>{{add_form.as_p}}</p>
+    {%csrf_token%}
+    <input type = "submit" value = "add">
+</form>
+{%endif%}
+{%endblock%}

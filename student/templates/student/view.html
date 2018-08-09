@@ -4,16 +4,18 @@ Name : {{std.name}}
 <br>
 Roll No : {{std.roll_no}}
 <br>
-
+Branch :
 {%if bra_len == 1 %}
-Branch: {{branch_name}}
-<br>
+{{branch_name}}
 {%endif%}
+<br>
+Batch :
 {%if batch_len == 1 %}
-Batch : {{batch_name}}
+{{batch_name}}
 {%endif%}
 <br>
+Semester :
 {%if sem_len == 1%}
-Semester: {{sem_name}}
+{{sem_name}}
 {%endif%}
 {%endblock%}

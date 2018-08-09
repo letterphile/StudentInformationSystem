@@ -136,7 +136,15 @@ def student_view(request,student_id):
     batch_len = len(std.batch.all())
     bra_len = len(std.branch.all())
     semester_len = len(std.semester.all())
-    return render(request,'student/view.html',{'std':std,'batch_len':batch_len,'bra_len':bra_len,'sem_len':semester_len})
+    batch_name,branch_name,sem_name= None,None,None
+    if batch_len == 1:
+        batch_name = std.batch.get().year
+    if bra_len == 1:
+        branch_name =  std.branch.get().branch_name
+    if semester_len == 1:
+        sem_name = std.semester.get().semester_name
+    return render(request,'student/view.html',{'std':std,'batch_len':batch_len,'bra_len':bra_len,'sem_len':semester_len,
+    'branch_name':branch_name,'batch_name':batch_name,'sem_name':sem_name} )
 def view_students(request):
     students = Student.objects.all()
     return render(request,'student/view_result.html',{'students':students})

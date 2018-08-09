@@ -1,19 +1,19 @@
-{%extends 'student/view.html'%}
+{%extends 'student/base.html'%}
 {%block content%}
 Name : {{std.name}}
 <br>
 Roll No : {{std.roll_no}}
 <br>
 
-{%if bra_len==0%}
-Branch: {{std.branch.get().branch_name}}
+{%if bra_len == 1 %}
+Branch: {{branch_name}}
 <br>
 {%endif%}
-{%if batch_len==0%}
-Batch : {{str(std.batch.get().year)}}
+{%if batch_len == 1 %}
+Batch : {{batch_name}}
 {%endif%}
 <br>
-{%if sem_len==0%}
-Semester: {{str(std.semester.get().semester_name)}}
+{%if sem_len == 1%}
+Semester: {{sem_name}}
 {%endif%}
 {%endblock%}

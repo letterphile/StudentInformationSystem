@@ -131,3 +131,13 @@ def student_delete(request,student_id):
     id = std.id
     std.delete()
     return render(request,'student/base.html',{'name':name,'id':id})
+def student_view(request,student_id):
+    std = Student.objects.get(id=student_id)
+    batch_len = len(std.batch.all())
+    bra_len = len(std.branch.all())
+    semester_len = len(std.semester.all())
+    return render(request,'student/view.html',{'std':std,'batch_len':batch_len,'bra_len':bra_len,'sem_len':semester_len})
+def view_students(request):
+    students = Student.objects.all()
+    return render(request,'student/view_result.html',{'students':students})
+    

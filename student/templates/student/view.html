@@ -1,0 +1,19 @@
+{%extends 'student/view.html'%}
+{%block content%}
+Name : {{std.name}}
+<br>
+Roll No : {{std.roll_no}}
+<br>
+
+{%if bra_len==0%}
+Branch: {{std.branch.get().branch_name}}
+<br>
+{%endif%}
+{%if batch_len==0%}
+Batch : {{str(std.batch.get().year)}}
+{%endif%}
+<br>
+{%if sem_len==0%}
+Semester: {{str(std.semester.get().semester_name)}}
+{%endif%}
+{%endblock%}

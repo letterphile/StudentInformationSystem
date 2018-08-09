@@ -1,0 +1,17 @@
+// Place your key bindings in this file to overwrite the defaults
+[
+    { "key": "ctrl+`", "command": "workbench.action.terminal.focus"},
+    {
+        "key": "ctrl+`",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+1",
+        "command": "workbench.action.files.newFile"
+    },
+    {
+        "key": "ctrl+shift+1",
+        "command": "explorer.newFile"
+    }
+    ]

@@ -2,7 +2,7 @@
 <html>
     <ol>
         {%for student in students%}
-        <a href="{{ student.get_absolute_url }}">
+        <a href="{%url 'student:student_view' student.id%}">
         <li>{{student.name}}</li>
         </a>
         {%endfor%}

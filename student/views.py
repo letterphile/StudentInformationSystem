@@ -96,17 +96,25 @@ def student_add(request):
                 stud.save()
             if result != None and j==2:
                 try:
-                    stud.semester.add(Semester.objects.get(id=result))
+                    sem = Semester.objects.get(id=result)
+                    stud.semester.add(sem)
                     stud.save()
                 except ObjectDoesNotExist:
-                    stud.semester.add(Semester.objects.get(id=result))
+                    sem = Semester.objects.get(id=result)
+                    stud.semester.add(sem)
                     stud.save()
             if result != None and j==3:
                 try:
-                    stud.branch.add(Branch.objects.get(id=result))
+                    bra = Branch.objects.get(id=result)
+                    stud.branch.add(bra)
                     stud.save()
                 except ObjectDoesNotExist:
-                    stud.branch.add(Branch.objects.get(id=result))
+                    bra = Branch.objects.get(id=result)
+                    stud.branch.add(bra)
+                    stud.save()
+                courses = Course.objects.filter(branch=bra).filter(semester=sem)
+                for course in courses:
+                    stud.course.add(course)
                     stud.save()
             if result != None and j==4:
                 try:
@@ -133,9 +141,12 @@ def student_delete(request,student_id):
     return render(request,'student/base.html',{'name':name,'id':id})
 def student_view(request,student_id):
     std = Student.objects.get(id=student_id)
+    std_sem =std.semester.get()
+    std_bra =std.branch.get()
     batch_len = len(std.batch.all())
     bra_len = len(std.branch.all())
     semester_len = len(std.semester.all())
+    courses = std.course.all()
     batch_name,branch_name,sem_name= None,None,None
     if batch_len == 1:
         batch_name = std.batch.get().year
@@ -144,7 +155,7 @@ def student_view(request,student_id):
     if semester_len == 1:
         sem_name = std.semester.get().semester_name
     return render(request,'student/view.html',{'std':std,'batch_len':batch_len,'bra_len':bra_len,'sem_len':semester_len,
-    'branch_name':branch_name,'batch_name':batch_name,'sem_name':sem_name} )
+    'branch_name':branch_name,'batch_name':batch_name,'sem_name':sem_name,'courses':courses} )
 def view_students(request):
     students = Student.objects.all()
     return render(request,'student/view_result.html',{'students':students})
@@ -156,10 +167,17 @@ def course_add(request):
         cours.save()
         for branch in request.POST.getlist('branch'):
             cours.branch.add(Branch.objects.get(branch_code=branch))
+            stds= Student.objects.filter(branch=Branch.objects.get(branch_code=branch)).filter(semester=Semester.objects.get(semester_code=request.POST.get('semester')))
+            print(stds)
+            for std in stds:
+                cours.student_set.add(std)
+                cours.save()
         cours.save()
         cours.semester.add(Semester.objects.get(semester_code=request.POST.get('semester')))
         cours.save()
+        
         cours_form='Empty'
+        
     else:
         cours_form = CourseForm()
         cours = 'empty'

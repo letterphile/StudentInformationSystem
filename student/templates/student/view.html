@@ -18,4 +18,13 @@ Semester :
 {%if sem_len == 1%}
 {{sem_name}}
 {%endif%}
+<br>
+Courses : 
+<ol>
+{%for course in courses %}
+<li>
+{{course.course_name }} ({{course.course_code}})
+</li>
+{%endfor%}
+</ol>
 {%endblock%}

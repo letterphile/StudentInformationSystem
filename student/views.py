@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .form import StudentForm,FilterForm
+from .form import StudentForm,FilterForm,CourseForm
 from .models import *
 from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
@@ -148,4 +148,20 @@ def student_view(request,student_id):
 def view_students(request):
     students = Student.objects.all()
     return render(request,'student/view_result.html',{'students':students})
-    
+
+def course_add(request):
+    if request.method=='POST':
+        cours = Course(course_name=request.POST.get('course_name'),
+        course_code=request.POST.get('course_code'))
+        cours.save()
+        for branch in request.POST.getlist('branch'):
+            cours.branch.add(Branch.objects.get(branch_code=branch))
+        cours.save()
+        cours.semester.add(Semester.objects.get(semester_code=request.POST.get('semester')))
+        cours.save()
+        cours_form='Empty'
+    else:
+        cours_form = CourseForm()
+        cours = 'empty'
+        
+    return render(request,'student/course_form.html',{'cours_form':cours_form,'cours':cours})     

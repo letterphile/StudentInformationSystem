@@ -9,5 +9,6 @@ urlpatterns = [
    path('delete/<int:student_id>',views.student_delete,name='student_delete'),
    path('view/<int:student_id>',views.student_view,name='student_view'),
    path('view/',views.view_students,name='view_students'),
+   path('add/course/',views.course_add,name='course_add'),
 
 ]

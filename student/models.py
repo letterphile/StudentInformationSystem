@@ -27,31 +27,21 @@ class Semester(models.Model):
         return self.semester_name
 
 class Course(models.Model):
+    GRADE_CHOICE = [(x,x) for x in ['O','A+','A','B+','B','C+','C','P','F','FE','']]
     course_name = models.CharField(max_length= 45)
     course_code = models.CharField(max_length=7)
     semester = models.ManyToManyField(Semester)
     branch = models.ManyToManyField(Branch)
-
+    grade = models.CharField(max_length=2,choices=GRADE_CHOICE,default='')
     class Meta:
         ordering = ('course_code',)
     def __str__(self):
         return self.course_name
-    
-class Grade(models.Model):
-    grade_value = models.CharField(max_length=2)
-    course = models.ManyToManyField(Course)
-    
-    
-    class Meta:
-        ordering = ('grade_value',)
-    def __str__(self):
-        return self.grade_value
 
 class Student(models.Model):
     name = models.CharField(max_length=15)
     roll_no = models.PositiveIntegerField()
     course = models.ManyToManyField(Course)
-    grade= models.ManyToManyField(Grade)
     batch = models.ManyToManyField(Batch)
     branch = models.ManyToManyField(Branch)
     semester = models.ManyToManyField(Semester)

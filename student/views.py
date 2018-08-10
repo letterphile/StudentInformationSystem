@@ -65,14 +65,14 @@ def show_result(request):
     result_list.append(request.POST.get('branch'))
     i=0
     for result in result_list:
-        if result != None and i == 0 :
-            bat= Batch.objects.get(id=result)
+        if result != '' and i == 0 :
+            bat= Batch.objects.get(year=result)
             students = students.filter(batch=bat)
-        if result != None and i==1 :
-            sem= Semester.objects.get(id=result)
+        if result != '' and i==1 :
+            sem= Semester.objects.get(semester_code=result)
             students = students.filter(semester=sem)
-        if result != None and i==2:
-            bra = Branch.objects.get(id=result) 
+        if result != '' and i==2:
+            bra = Branch.objects.get(branch_code=result) 
             students = students.filter(branch=bra)
         i+=1
     

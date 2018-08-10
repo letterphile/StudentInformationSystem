@@ -3,22 +3,22 @@ from django.urls import reverse
 
 # Create your models here.
 class Batch(models.Model):
-    year = models.PositiveIntegerField(blank=True)
+    year = models.PositiveIntegerField()
     class Meta:
         ordering = ('year',)
     def __str__(self):
         return str(self.year)
 class Branch(models.Model):
-    branch_name= models.CharField(max_length=25,default='Computer Science and Engineering',blank=True)
-    branch_code = models.CharField(max_length=3,default='CSE',blank=True)
+    branch_name= models.CharField(max_length=25)
+    branch_code = models.CharField(max_length=3)
     class Meta:
         ordering =  ('branch_name',)
     def __str__(self):
         return self.branch_name
     
 class Semester(models.Model):
-    semester_name = models.CharField(max_length = 10,default='Semester - 1',blank=True)
-    semester_code = models.CharField(max_length = 2,default='S1',blank=True)
+    semester_name = models.CharField(max_length = 10)
+    semester_code = models.CharField(max_length = 2)
     status = models.CharField(max_length=10,choices=(('current','Current'),('past','Past'),),default='current',blank=True)
     branch = models.ManyToManyField(Branch) 
     class Meta:
@@ -52,9 +52,9 @@ class Student(models.Model):
     roll_no = models.PositiveIntegerField()
     course = models.ManyToManyField(Course)
     grade= models.ManyToManyField(Grade)
-    batch = models.ManyToManyField(Batch,blank=True)
-    branch = models.ManyToManyField(Branch,blank=True)
-    semester = models.ManyToManyField(Semester,blank=True)
+    batch = models.ManyToManyField(Batch)
+    branch = models.ManyToManyField(Branch)
+    semester = models.ManyToManyField(Semester)
     objects = models.Manager()
     class Meta :
         ordering = ('name',)
@@ -65,5 +65,3 @@ class Student(models.Model):
         return reverse('student:student_form',args=[
             self.id,
         ])
-
-    

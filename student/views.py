@@ -1,3 +1,4 @@
+"""
 from django.shortcuts import render
 from .form import StudentForm,FilterForm,CourseForm,CourseDataForm
 from .models import *
@@ -137,11 +138,13 @@ def course_add(request):
         cours = 'empty'
         
     return render(request,'student/course_form.html',{'cours_form':cours_form,'cours':cours}) 
+<<<<<<< HEAD
+    """
+=======
 
 def course_data(request,student_id,course_id):
     std = Student.objects.get(id=student_id)
     course = Course.objects.get(id=course_id)
-    course_form = CourseDataForm(instance=course)
     if request.method =='POST':
         result_list =[]
         try:
@@ -162,6 +165,9 @@ def course_data(request,student_id,course_id):
                 course.save()
             j+=1
         course.save()
+        course_form = CourseDataForm(instance=course)
+    else:
+        course_form = CourseDataForm(instance=course)
     return render(request,'student/course_data.html',{'std':std,'course':course,'course_form':course_form})          
 
 
@@ -170,3 +176,4 @@ def course_data(request,student_id,course_id):
 
 
     
+>>>>>>> master

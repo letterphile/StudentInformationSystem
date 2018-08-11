@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-
 # Create your models here.
 class Batch(models.Model):
     year = models.PositiveIntegerField()
@@ -31,25 +30,45 @@ class PastSemester(models.Model):
         ordering = ('semester_code',)
     def __str__(self):
         return self.semester_name
+class Grade(models.Model):
+    GRADES = [(x,x) for x in ['O','A+','A','B+','B','C+','C','P','F','FE']]
+    grade = models.CharField(max_length=2,choices = GRADES)
+    class Meta:
+        ordering = ('id',)
+    def __str__(self):
+        return self.grade
+class InternalMark(models.Model):
+    mark = models.PositiveSmallIntegerField()
+    class Meta:
+        ordering=('mark',)
+    def __str__(self):
+        return str(self.mark)
+
+class Attendance(models.Model):
+    attendance = models.PositiveSmallIntegerField()
+    class Meta:
+        ordering = ('attendance',)
+    def __str__(self):
+        return str(self.attendance)
+
 class Course(models.Model):
-    GRADE_CHOICE = [(x,x) for x in ['O','A+','A','B+','B','C+','C','P','F','FE','']]
     course_name = models.CharField(max_length= 45)
     course_code = models.CharField(max_length=7)
     semester = models.ForeignKey(CurrentSemester,on_delete=models.CASCADE)
     branch = models.ManyToManyField(Branch)
-    grade = models.CharField(max_length=2,choices=GRADE_CHOICE,default='')
-    attendance = models.PositiveIntegerField(null=True) 
-    internal = models.PositiveIntegerField(null=True)
+    grade = models.ManyToManyField(Grade)
 
     class Meta:
-        ordering = ('course_code',)
+        ordering = ('id',)
     def __str__(self):
         return self.course_name
-
 class Student(models.Model):
     name = models.CharField(max_length=15)
     roll_no = models.PositiveIntegerField()
     course = models.ManyToManyField(Course)
+    grade_list = []
+    attendance_list =[]
+    internalmark_list = []
     batch = models.ForeignKey(Batch,on_delete=models.CASCADE)
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE)
     current_semester = models.ForeignKey(CurrentSemester,on_delete=models.CASCADE)

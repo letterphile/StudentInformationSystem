@@ -83,6 +83,9 @@ def student_add(request):
         stud = Student(name=result_list[0],roll_no=result_list[1],
         current_semester=csem,batch=bat,branch=bra)
         stud.save()
+        courses  = Course.objects.filter(semester=stud.current_semester).filter(branch=stud.branch)
+        for course in courses:
+            stud.course.add(course)
         add_form = 'Empty'
     else:
         add_form = StudentForm()

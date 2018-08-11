@@ -20,12 +20,16 @@ Semester :
     <th>Course Name</th>
     <th>Course Code</th>
     <th>Grade Obtained</th>
+    <th>Attandence</th>
+    <th>Internal Marks</th>
 </tr>
 {%for course in courses %}
 <tr>
 <td>{{course.course_name }}</td>
 <td>{{course.course_code}} </td>
 <td>{{course.grade}}</td>
+<td>{{course.attendance}}</td>
+<td>{{course.internal}}</td>
 </tr>
 {%endfor%}
 </ol>

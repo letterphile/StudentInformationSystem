@@ -7,4 +7,14 @@
    <input type ="submit" value="save">
 </form>
 <a href="{%url 'student:student_delete' std.id %}"><p>Delete</p></a>
+<h2>Acadamecs</h2>
+<h3>{{std.current_semester}}</h3>
+<h2>Courses</h2>
+<ol>
+    {%for course in courses%}
+    <a href="{%url 'student:course_data' std.id course.id%}">
+    <li>{{course}}</li>
+    </a>
+    {%endfor%}
+</ol>
 {%endblock%}

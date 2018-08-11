@@ -1,0 +1,13 @@
+{%extends 'student/base.html'%}
+{%block content%}
+<h1>Course Data Updation</h1>
+<h2>{{course.course_name}} ({{course.course_code}})</h2>
+<h3>{{std.name}} ({{std.roll_no}})</h3>
+<form action="." method = 'post'>
+    <p>
+    {{course_form.as_p}}
+    {%csrf_token%}
+    </p>
+    <input type="submit" value="save">
+</form>
+{%endblock%}

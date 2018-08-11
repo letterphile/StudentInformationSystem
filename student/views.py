@@ -1,3 +1,4 @@
+"""
 from django.shortcuts import render
 from .form import StudentForm,FilterForm,CourseForm
 from .models import *
@@ -136,3 +137,4 @@ def course_add(request):
         cours = 'empty'
         
     return render(request,'student/course_form.html',{'cours_form':cours_form,'cours':cours}) 
+    """

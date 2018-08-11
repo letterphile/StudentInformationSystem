@@ -31,7 +31,8 @@ class PastSemester(models.Model):
     def __str__(self):
         return self.semester_name
 class Grade(models.Model):
-    grade = models.CharField(max_length=2)
+    GRADES = [(x,x) for x in ['O','A+','A','B+','B','C+','C','P','F','FE']]
+    grade = models.CharField(max_length=2,choices = GRADES)
     class Meta:
         ordering = ('id',)
     def __str__(self):

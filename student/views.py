@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .form import StudentForm,FilterForm,CourseForm
+from .form import StudentForm,FilterForm,CourseForm,CourseDataForm
 from .models import *
 from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
@@ -44,7 +44,8 @@ def student_form(request,student_id):
     else:                
         std = Student.objects.get(id=student_id)
         my_form = StudentForm(instance=std)
-    return render(request,'student/detail_form.html',{'form':my_form,'std':std})
+    courses = std.course.all()
+    return render(request,'student/detail_form.html',{'form':my_form,'std':std,'courses':courses})
 
 def filter_form(request):
     f_form = FilterForm()
@@ -136,3 +137,36 @@ def course_add(request):
         cours = 'empty'
         
     return render(request,'student/course_form.html',{'cours_form':cours_form,'cours':cours}) 
+
+def course_data(request,student_id,course_id):
+    std = Student.objects.get(id=student_id)
+    course = Course.objects.get(id=course_id)
+    course_form = CourseDataForm(instance=course)
+    if request.method =='POST':
+        result_list =[]
+        try:
+            for i in ['grade','attendance','internal']:
+                result_list.append(request.POST[i])
+        except KeyError:
+            result_list.append(None)
+        j=0
+        for result in result_list:
+            if result != None and  j==0:
+                course.grade= result
+                course.save()
+            if result != None and j==1:
+                course.attendance= result
+                course.save()
+            if result != None and j==2:
+                course.internal = result
+                course.save()
+            j+=1
+        course.save()
+    return render(request,'student/course_data.html',{'std':std,'course':course,'course_form':course_form})          
+
+
+        
+
+
+
+    

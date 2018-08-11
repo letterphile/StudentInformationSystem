@@ -141,7 +141,6 @@ def course_add(request):
 def course_data(request,student_id,course_id):
     std = Student.objects.get(id=student_id)
     course = Course.objects.get(id=course_id)
-    course_form = CourseDataForm(instance=course)
     if request.method =='POST':
         result_list =[]
         try:
@@ -162,6 +161,9 @@ def course_data(request,student_id,course_id):
                 course.save()
             j+=1
         course.save()
+        course_form = CourseDataForm(instance=course)
+    else:
+        course_form = CourseDataForm(instance=course)
     return render(request,'student/course_data.html',{'std':std,'course':course,'course_form':course_form})          
 
 

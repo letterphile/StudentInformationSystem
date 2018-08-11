@@ -26,3 +26,9 @@ class CourseForm(forms.Form):
     ('S6','semester-6'),('S7','semester-7'),('S8','semester-8'))
     branch = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=BRA_CHOICES,required=True)
     semester = forms.ChoiceField(choices=SEMESTERS,required=True)
+
+class CourseDataForm(forms.ModelForm):
+
+    class Meta:
+        model = Course
+        fields = ['grade','attendance','internal']

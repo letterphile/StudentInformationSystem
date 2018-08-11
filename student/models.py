@@ -15,24 +15,32 @@ class Branch(models.Model):
         ordering =  ('branch_name',)
     def __str__(self):
         return self.branch_name
-    
-class Semester(models.Model):
+class CurrentSemester(models.Model):
     semester_name = models.CharField(max_length = 10)
     semester_code = models.CharField(max_length = 2)
-    status = models.CharField(max_length=10,choices=(('current','Current'),('past','Past'),),default='current',blank=True)
     branch = models.ManyToManyField(Branch) 
     class Meta:
         ordering = ('semester_code',)
     def __str__(self):
         return self.semester_name
-
+class PastSemester(models.Model):
+    semester_name = models.CharField(max_length = 10)
+    semester_code = models.CharField(max_length = 2)
+    branch = models.ManyToManyField(Branch) 
+    class Meta:
+        ordering = ('semester_code',)
+    def __str__(self):
+        return self.semester_name
 class Course(models.Model):
     GRADE_CHOICE = [(x,x) for x in ['O','A+','A','B+','B','C+','C','P','F','FE','']]
     course_name = models.CharField(max_length= 45)
     course_code = models.CharField(max_length=7)
-    semester = models.ManyToManyField(Semester)
+    semester = models.ForeignKey(CurrentSemester,on_delete=models.CASCADE)
     branch = models.ManyToManyField(Branch)
     grade = models.CharField(max_length=2,choices=GRADE_CHOICE,default='')
+    attendance = models.PositiveIntegerField(null=True) 
+    internal = models.PositiveIntegerField(null=True)
+
     class Meta:
         ordering = ('course_code',)
     def __str__(self):
@@ -42,9 +50,10 @@ class Student(models.Model):
     name = models.CharField(max_length=15)
     roll_no = models.PositiveIntegerField()
     course = models.ManyToManyField(Course)
-    batch = models.ManyToManyField(Batch)
-    branch = models.ManyToManyField(Branch)
-    semester = models.ManyToManyField(Semester)
+    batch = models.ForeignKey(Batch,on_delete=models.CASCADE)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE)
+    current_semester = models.ForeignKey(CurrentSemester,on_delete=models.CASCADE)
+    past_semester= models.ManyToManyField(PastSemester)
     objects = models.Manager()
     class Meta :
         ordering = ('name',)

@@ -5,26 +5,28 @@ Name : {{std.name}}
 Roll No : {{std.roll_no}}
 <br>
 Branch :
-{%if bra_len == 1 %}
 {{branch_name}}
-{%endif%}
 <br>
 Batch :
-{%if batch_len == 1 %}
 {{batch_name}}
-{%endif%}
 <br>
 Semester :
-{%if sem_len == 1%}
 {{sem_name}}
-{%endif%}
 <br>
-Courses : 
-<ol>
+<h2> Acadamics </h2> 
+<h3>{{sem_name}}</h3>
+<table>
+<tr>
+    <th>Course Name</th>
+    <th>Course Code</th>
+    <th>Grade Obtained</th>
+</tr>
 {%for course in courses %}
-<li>
-{{course.course_name }} ({{course.course_code}})
-</li>
+<tr>
+<td>{{course.course_name }}</td>
+<td>{{course.course_code}} </td>
+<td>{{course.grade}}</td>
+</tr>
 {%endfor%}
 </ol>
 <a href="{%url 'student:student_form' std.id %}">Edit</a>

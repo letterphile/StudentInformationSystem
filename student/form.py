@@ -1,13 +1,13 @@
 from django.forms import ModelForm
 from .models import * 
 from django import forms
-
+from django.forms import ModelForm
 class StudentForm(ModelForm):
     class Meta:
         model = Student
-        fields = ['name','roll_no','semester','branch','batch']
+        fields = ['name','roll_no','batch','branch','current_semester']
 class FilterForm(forms.Form):
-    semester_list = [(s.semester_code,s.semester_name) for s in Semester.objects.all()]
+    semester_list = [(s.semester_code,s.semester_name) for s in CurrentSemester.objects.all()]
     semester_list = [('','ALL')]+semester_list
     branch_list = [(b.branch_code,b.branch_name) for b in Branch.objects.all()]
     branch_list= [('','ALL')]+branch_list
